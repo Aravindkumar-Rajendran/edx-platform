@@ -293,8 +293,6 @@ FEATURES = {
     # Special Exams, aka Timed and Proctored Exams
     'ENABLE_SPECIAL_EXAMS': False,
 
-    'ORGANIZATIONS_APP': False,
-
     # Show the language selector in the header
     'SHOW_HEADER_LANGUAGE_SELECTOR': False,
 
@@ -1360,6 +1358,8 @@ INSTALLED_APPS = [
     'common.djangoapps.track',
     'eventtracking.django.apps.EventTrackingConfig',
 
+    'util',
+
     # For asset pipelining
     'common.djangoapps.edxmako.apps.EdxMakoConfig',
     'pipeline',
@@ -1513,6 +1513,9 @@ INSTALLED_APPS = [
     'openedx.core.djangoapps.content.learning_sequences.apps.LearningSequencesConfig',
 
     'ratelimitbackend',
+
+    # Database-backed Organizations App (http://github.com/edx/edx-organizations)
+    'organizations',
 ]
 
 
@@ -1640,9 +1643,6 @@ OPTIONAL_APPS = (
 
     # edxval
     ('edxval', 'openedx.core.djangoapps.content.course_overviews.apps.CourseOverviewsConfig'),
-
-    # Organizations App (http://github.com/edx/edx-organizations)
-    ('organizations', None),
 
     # Enterprise App (http://github.com/edx/edx-enterprise)
     ('enterprise', None),
@@ -2294,3 +2294,17 @@ VERIFY_STUDENT = {
     # The variable represents the window within which a verification is considered to be "expiring soon."
     "EXPIRING_SOON_WINDOW": 28,
 }
+
+######################## Organizations ########################
+
+# .. toggle_name: ORGANIZATIONS_ENABLE_STRICTNESS
+# .. toggle_implementation: DjangoSetting
+# .. toggle_default: False
+# .. toggle_description: Set to True to enforce that Organization references in new
+#   content (such as the "org" slugs on course runs and content libraries) must refer
+#   to Organizations already existing in the database. If left as False, then creating
+#   content referencing an unknown Organization will cause a new Organization to
+#   automatically be created.
+# .. toggle_use_cases: open_edx
+# .. toggle_creation_date: 2020-09-29
+ORGANIZATIONS_ENABLE_STRICTNESS = False
